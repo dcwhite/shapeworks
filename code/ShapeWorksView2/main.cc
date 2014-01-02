@@ -43,6 +43,11 @@ void RedirectIOToConsole2()
 
   // redirect unbuffered STDOUT to the console
   lStdHandle = (long)GetStdHandle( STD_OUTPUT_HANDLE );
+  if (lStdHandle == (long)INVALID_HANDLE_VALUE)
+  {
+    DWORD error = GetLastError();
+    return;
+  }
   hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
   fp = _fdopen( hConHandle, "w" );
   *stdout = *fp;
@@ -50,6 +55,11 @@ void RedirectIOToConsole2()
 
   // redirect unbuffered STDIN to the console
   lStdHandle = (long)GetStdHandle( STD_INPUT_HANDLE );
+  if (lStdHandle == (long)INVALID_HANDLE_VALUE)
+  {
+    DWORD error = GetLastError();
+    return;
+  }
   hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
   fp = _fdopen( hConHandle, "r" );
   *stdin = *fp;
@@ -57,6 +67,11 @@ void RedirectIOToConsole2()
 
   // redirect unbuffered STDERR to the console
   lStdHandle = (long)GetStdHandle( STD_ERROR_HANDLE );
+  if (lStdHandle == (long)INVALID_HANDLE_VALUE)
+  {
+    DWORD error = GetLastError();
+    return;
+  }
   hConHandle = _open_osfhandle( lStdHandle, _O_TEXT );
   fp = _fdopen( hConHandle, "w" );
   *stderr = *fp;
